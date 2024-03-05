@@ -1,0 +1,92 @@
+-- Table: public.user
+
+-- DROP TABLE IF EXISTS public."user";
+
+CREATE TABLE IF NOT EXISTS public."user"
+(
+    name character varying COLLATE pg_catalog."default" NOT NULL,
+    password character varying COLLATE pg_catalog."default" NOT NULL,
+    email character varying COLLATE pg_catalog."default",
+    user_id character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT user_pkey PRIMARY KEY (user_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."user"
+    OWNER to dbms_practice;
+
+-- Table: public.event
+
+-- DROP TABLE IF EXISTS public.event;
+
+CREATE TABLE IF NOT EXISTS public.event
+(
+    event_id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    name character varying COLLATE pg_catalog."default",
+    host_id character varying COLLATE pg_catalog."default",
+    start_time timestamp without time zone,
+    end_time timestamp without time zone,
+    is_all_day boolean,
+    CONSTRAINT event_pkey PRIMARY KEY (event_id),
+    CONSTRAINT host_id FOREIGN KEY (host_id)
+        REFERENCES public."user" (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.event
+    OWNER to dbms_practice;
+
+-- Table: public.user_event
+
+-- DROP TABLE IF EXISTS public.user_event;
+
+CREATE TABLE IF NOT EXISTS public.user_event
+(
+    user_id character varying COLLATE pg_catalog."default" NOT NULL,
+    event_id bigint NOT NULL,
+    CONSTRAINT user_event_pkey PRIMARY KEY (user_id, event_id),
+    CONSTRAINT event_id FOREIGN KEY (event_id)
+        REFERENCES public.event (event_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT user_id FOREIGN KEY (user_id)
+        REFERENCES public."user" (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.user_event
+    OWNER to dbms_practice;
+
+
+-- Table: public.notification
+
+-- DROP TABLE IF EXISTS public.notification;
+
+CREATE TABLE IF NOT EXISTS public.notification
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    user_id character varying COLLATE pg_catalog."default" NOT NULL,
+    effective_time timestamp without time zone NOT NULL,
+    event_id bigint NOT NULL,
+    CONSTRAINT notification_pkey PRIMARY KEY (id),
+    CONSTRAINT event_id FOREIGN KEY (event_id)
+        REFERENCES public.event (event_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT user_id FOREIGN KEY (user_id)
+        REFERENCES public."user" (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.notification
+    OWNER to dbms_practice;
