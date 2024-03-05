@@ -1,24 +1,60 @@
-## Getting Started
+# Calendar Application Readme
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Environment Setup
+- **IDE:** Visual Studio Code (VSCode) with WSL remote
+- **Operating System:** Windows 11
+- **WSL Version:** Ubuntu 20.04
 
-## Folder Structure
+## Program Execution
 
-The workspace contains two folders by default, where:
+To run the program, follow these steps:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+1. Execute `UserLogin.java` located at `new_calendar/src/User/UserLogin.java`.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Library References
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+Ensure the following libraries are referenced:
 
-## Dependency Management
+1. **PostgreSQL Driver:**
+   - Path: `/usr/lib/jvm/java-1.8.0-openjdk-amd64/lib/postgresql-42.6.0.jar`
+   
+2. **JAR Files:**
+   - Located in the `lib/` folder within the project directory.
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## Commands
+
+Use the following command to execute the program:
+
+```bash
+/usr/bin/env /usr/lib/jvm/java-8-openjdk-amd64/bin/java -cp /tmp/cp_6rjrwcfms8tvljxfi3rlsdjam.jar User.UserLogin
+```
+
+## Trouble shooting Display Issues
+
+If the display doesn't show up correctly, follow these steps:
+
+Execute the following command:
+
+```
+export DISPLAY:=0
+```
 
 
-## Can't connect to X11 window server using '172.17.176.1:0' as the value of the DISPLAY variable.
+## Classpath reference
 
-에러났을시 unset DISPLAY
-export DISPLAY=:0
+```
+-cp /tmp/cp_6rjrwcfms8tvljxfi3rlsdjam.jar
+```
+
+## Calendar Features 
+
+- [x] Create a User Account  
+- [x] Update a User Account  
+- [x] Authenticate a User  
+- [x] Calendar View  
+- [x] Event Reminder Setting  
+- [x] Check Availability of Family   Members
+- [x] Create an Event  
+- [x] Invite Family Members to the Event
+- [x] View an Event  
+
